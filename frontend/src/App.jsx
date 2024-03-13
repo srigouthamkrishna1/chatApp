@@ -13,6 +13,7 @@ import { useContext } from "react";
 
 function App() {
   const { user } = useContext(AuthContext);
+  console.log("Top", user);
   return (
     <>
       <ChatContextProvider user={user}>

@@ -6,6 +6,8 @@ export const Appbar = () => {
     const { user, logoutUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
+
+
     return <div className="shadow h-[9%] flex justify-between items-center">
         <div className="flex flex-col justify-center h-full ml-4 text-xl font-bold">
             Chat App

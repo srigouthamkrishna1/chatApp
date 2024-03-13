@@ -6,16 +6,16 @@ export const ChatContextProvider = ({ children, user }) => {
     const [userChats, setUserChats] = useState(null);
     const [isUserChatsLoading, setIsUserChatsLoading] = useState(false);
     const [userChatsError, setUserChatsError] = useState(null);
-    console.log("userChats are", userChats);
+    console.log("user is", user?.id);
     useEffect(() => {
         const getUserChats = async () => {
 
-            if (user?._id) {
+            if (user?.id) {
                 console.log("inside here");
 
                 setIsUserChatsLoading(true);
                 try {
-                    const response = await axios.get(`http://localhost:3000/api/chats/${user._id}`);
+                    const response = await axios.get(`http://localhost:3000/api/chats/${user?.id}`);
                     console.log("Response is", response.data);
                     setIsUserChatsLoading(true);
                     setUserChats(response.data);
