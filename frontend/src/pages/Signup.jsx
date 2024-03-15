@@ -30,7 +30,7 @@ export const Signup = () => {
           <Button onClick={async () => {
             const response = await axios.post("http://localhost:3000/api/users/signup", registerInfo);
             localStorage.setItem("User", JSON.stringify(response.data));
-            setUser(response);
+            setUser(response.data);
             navigate("/dashboard")
           }} label={"Sign up"} />
         </div>

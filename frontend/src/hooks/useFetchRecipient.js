@@ -3,7 +3,8 @@ import axios from 'axios';
 export const useFetchRecipienUser = (chat, user) => {
     const [recipientUser, setRecipientUser] = useState(null);
     const [error, setError] = useState(null)
-    const recipientId = chat?.members.find((id) => id !== user._id);
+    const recipientId = chat?.members.find((id) => id != user.id);
+    console.log("recipientId", user)
     useEffect(() => {
         const getUser = async () => {
             if (!recipientId)
@@ -14,6 +15,6 @@ export const useFetchRecipienUser = (chat, user) => {
 
         }
         getUser()
-    }, [])
+    }, [recipientId])
     return { recipientUser };
 }
