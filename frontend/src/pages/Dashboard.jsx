@@ -10,10 +10,10 @@ export const Dashboard = () => {
     const { user } = useContext(AuthContext)
     const { userChats, isUserChatsLoading, userChatsError, updateCurrentChat } = useContext(ChatContext);
     console.log("===>", userChats);
-    return <div className="h-screen flex flex-col">
+    return <div className="h-screen ">
         <Appbar />
         <PotentialChats></PotentialChats>
-        <div className="grow w-full p-3">
+        <div className="h-[82%] w-full p-3 overflow-y-auto">
 
             <div className="flex w-full h-full">
                 <div className="w-[50%]">

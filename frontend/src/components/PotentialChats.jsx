@@ -5,7 +5,7 @@ const PotentialChats = () => {
     const { user } = useContext(AuthContext);
     const { potentialChats, createChat } = useContext(ChatContext);
     console.log("potential Chats", potentialChats)
-    return (<div className="grow-0">
+    return (<div className="h-[6%]">
         {potentialChats &&
 
             <div className="flex gap-3 mt-3 ml-3">

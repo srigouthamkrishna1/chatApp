@@ -8,7 +8,7 @@ export const Appbar = () => {
 
 
 
-    return <div className="shadow grow-0 flex justify-between items-center">
+    return <div className="shadow h-[10%] flex justify-between items-center">
         <div className="flex flex-col justify-center h-full ml-4 text-xl font-bold">
             Chat App
         </div>

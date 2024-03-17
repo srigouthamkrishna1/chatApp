@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
-
+import { io } from "socket.io-client"
 export const ChatContext = createContext();
 export const ChatContextProvider = ({ children, user }) => {
     const [userChats, setUserChats] = useState(null);
@@ -11,7 +11,53 @@ export const ChatContextProvider = ({ children, user }) => {
     const [isUserChatsLoading, setIsUserChatsLoading] = useState(false);
     const [userChatsError, setUserChatsError] = useState(null);
     const [currentChat, setCurrentChat] = useState(null);
+    const [newMessage, setNewMessage] = useState("");
+    const [socket, setSocket] = useState(null);
+    const [onlineUsers, setOnlineUsers] = useState([null]);
     console.log("currentChat", currentChat)
+    console.log("SetMessages", messages);
+    console.log("onlineUsers", onlineUsers);
+
+    useEffect(() => {
+        const newSocket = io("http://localhost:5000");
+
+        setSocket(newSocket);
+        console.log("Socket", newSocket);
+        return () => {
+            newSocket.disconnect();
+        }
+
+    }, [user]);
+    useEffect(() => {
+        if (socket == null) return;
+        console.log("Run")
+        socket.emit("addNewUser", user?.id);
+        socket.on("getOnlineUsers", (res) => {
+            setOnlineUsers(res);
+        })
+        return () => {
+            socket.off("getOnlineUsers");
+        }
+    }, [socket])
+    useEffect(() => {
+        if (!socket) return;
+        const recipientId = currentChat.members.find((u) => u !== user.id);
+
+        socket.emit("sendMessage", { ...newMessage, recipientId });
+    }, [newMessage])
+    useEffect(() => {
+        if (!socket) return
+        socket.on("getMessage", (res) => {
+            console.log("in this1")
+            if (currentChat._id !== res.chatId) {
+                return;
+            }
+            setMessages((prev) => [...prev, res]);
+        })
+        return () => {
+            socket.off("getMessage")
+        }
+    }, [currentChat, socket])
 
     useEffect(() => {
         const getUsers = async () => {
@@ -46,6 +92,17 @@ export const ChatContextProvider = ({ children, user }) => {
         getUsers()
 
     }, [userChats])
+    const sendTextMessage = async (textMessage, sender, currentChatId, setTextMessage) => {
+        if (!textMessage)
+            return console.log("You must type something")
+
+        const response = await axios.post("http://localhost:3000/api/messages", { chatId: currentChatId, senderId: sender.id, text: textMessage });
+        setNewMessage(response.data);
+        console.log("message sent is", response.data);
+        setMessages((prev) => { return [...prev, response.data] });
+
+        setTextMessage("");
+    }
     useEffect(() => {
         const getUserChats = async () => {
 
@@ -73,6 +130,7 @@ export const ChatContextProvider = ({ children, user }) => {
             setMessagesError(null);
             try {
                 const response = await axios.get(`http://localhost:3000/api/messages/${currentChat?._id}`)
+
                 console.log("messages response",);
                 setIsMessagesLoading(false);
                 setMessages(response.data);
@@ -106,5 +164,5 @@ export const ChatContextProvider = ({ children, user }) => {
 
 
     }
-    return <ChatContext.Provider value={{ userChats, isUserChatsLoading, userChatsError, potentialChats, createChat, updateCurrentChat, messages, currentChat }}>{children}</ChatContext.Provider>
+    return <ChatContext.Provider value={{ userChats, isUserChatsLoading, userChatsError, potentialChats, createChat, updateCurrentChat, messages, currentChat, sendTextMessage }}>{children}</ChatContext.Provider>
 }
