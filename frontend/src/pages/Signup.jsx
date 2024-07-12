@@ -28,7 +28,7 @@ export const Signup = () => {
         }} placeholder="123456" label={"Password"} />
         <div className="pt-4">
           <Button onClick={async () => {
-            const response = await axios.post("http://localhost:3000/api/users/signup", registerInfo);
+            const response = await axios.post("https://chatapp-t0rr.onrender.com/api/users/signup", registerInfo);
             localStorage.setItem("User", JSON.stringify(response.data));
             setUser(response.data);
             navigate("/dashboard")

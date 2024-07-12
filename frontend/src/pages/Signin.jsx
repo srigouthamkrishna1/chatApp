@@ -29,7 +29,7 @@ export const Signin = () => {
         }} />
         <div className="pt-4">
           <Button label={"Sign in"} onClick={async () => {
-            const response = await axios.post("http://localhost:3000/api/users/login", loginDetails);
+            const response = await axios.post("https://chatapp-t0rr.onrender.com/api/users/login", loginDetails);
             localStorage.setItem("User", JSON.stringify(response.data));
             setUser(response.data);
             navigate("/dashboard")
