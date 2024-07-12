@@ -10,7 +10,7 @@ export const useFetchRecipienUser = (chat, user) => {
         const getUser = async () => {
             if (!recipientId)
                 return null;
-            const response = await axios.get(`http://localhost:3000/api/users/find/${recipientId}`)
+            const response = await axios.get(`https://chatapp-t0rr.onrender.com/api/users/find/${recipientId}`)
 
             setRecipientUser(response.data);
 

@@ -64,7 +64,7 @@ export const ChatContextProvider = ({ children, user }) => {
         const getUsers = async () => {
             try {
 
-                const response = await axios.get(`http://localhost:3000/api/users`);
+                const response = await axios.get(`https://chatapp-t0rr.onrender.com/api/users`);
                 console.log("userChats is", userChats);
 
                 const pChats = response.data.filter((u) => {
@@ -97,7 +97,7 @@ export const ChatContextProvider = ({ children, user }) => {
         if (!textMessage)
             return console.log("You must type something")
 
-        const response = await axios.post("http://localhost:3000/api/messages", { chatId: currentChatId, senderId: sender.id, text: textMessage });
+        const response = await axios.post("https://chatapp-t0rr.onrender.com/api/messages", { chatId: currentChatId, senderId: sender.id, text: textMessage });
         setNewMessage(response.data);
         console.log("message sent is", response.data);
         setMessages((prev) => { return [...prev, response.data] });
@@ -112,7 +112,7 @@ export const ChatContextProvider = ({ children, user }) => {
 
                 setIsUserChatsLoading(true);
                 try {
-                    const response = await axios.get(`http://localhost:3000/api/chats/${user?.id}`);
+                    const response = await axios.get(`https://chatapp-t0rr.onrender.com/api/chats/${user?.id}`);
                     console.log("Response is", response.data);
                     setIsUserChatsLoading(true);
                     setUserChats(response.data);
@@ -130,7 +130,7 @@ export const ChatContextProvider = ({ children, user }) => {
             setIsMessagesLoading(true);
             setMessagesError(null);
             try {
-                const response = await axios.get(`http://localhost:3000/api/messages/${currentChat?._id}`)
+                const response = await axios.get(`https://chatapp-t0rr.onrender.com/api/messages/${currentChat?._id}`)
 
                 console.log("messages response",);
                 setIsMessagesLoading(false);
@@ -156,7 +156,7 @@ export const ChatContextProvider = ({ children, user }) => {
             console.log("firstID", firstId);
             console.log("secondId", secondId);
 
-            const response = await axios.post(`http://localhost:3000/api/chats/`, { firstId, secondId });
+            const response = await axios.post(`https://chatapp-t0rr.onrender.com/api/chats/`, { firstId, secondId });
             setUserChats((prev) => {
                 if (prev == null || prev == undefined) {
                     return [response.data];
