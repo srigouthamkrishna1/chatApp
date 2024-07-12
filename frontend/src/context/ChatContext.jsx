@@ -18,6 +18,7 @@ export const ChatContextProvider = ({ children, user }) => {
     console.log("SetMessages", messages);
     console.log("onlineUsers", onlineUsers);
 
+
     useEffect(() => {
         const newSocket = io("http://localhost:5000");
 
@@ -68,7 +69,7 @@ export const ChatContextProvider = ({ children, user }) => {
 
                 const pChats = response.data.filter((u) => {
                     let isChatCreated = false;
-                    if (user?._id == u._id) {
+                    if (user?.id == u._id) {
                         return false;
                     }
                     if (userChats) {
@@ -156,7 +157,14 @@ export const ChatContextProvider = ({ children, user }) => {
             console.log("secondId", secondId);
 
             const response = await axios.post(`http://localhost:3000/api/chats/`, { firstId, secondId });
-            setUserChats((prev) => [...prev, response.data]);
+            setUserChats((prev) => {
+                if (prev == null || prev == undefined) {
+                    return [response.data];
+                }
+                else {
+                    return [...prev, response.data];
+                }
+            });
 
         } catch (err) {
 
@@ -164,5 +172,5 @@ export const ChatContextProvider = ({ children, user }) => {
 
 
     }
-    return <ChatContext.Provider value={{ userChats, isUserChatsLoading, userChatsError, potentialChats, createChat, updateCurrentChat, messages, currentChat, sendTextMessage }}>{children}</ChatContext.Provider>
+    return <ChatContext.Provider value={{ userChats, isUserChatsLoading, userChatsError, potentialChats, createChat, updateCurrentChat, messages, currentChat, sendTextMessage, onlineUsers }}>{children}</ChatContext.Provider>
 }

@@ -8,7 +8,8 @@ import PotentialChats from "../components/PotentialChats"
 import ChatBox from "../components/ChatBox"
 export const Dashboard = () => {
     const { user } = useContext(AuthContext)
-    const { userChats, isUserChatsLoading, userChatsError, updateCurrentChat } = useContext(ChatContext);
+    const { userChats, isUserChatsLoading, userChatsError, updateCurrentChat, onlineUsers } = useContext(ChatContext);
+
     console.log("===>", userChats);
     return <div className="h-screen ">
         <Appbar />
@@ -22,7 +23,15 @@ export const Dashboard = () => {
 
                             <div className="w-full border-2 border-black">
                                 {userChats?.map((chat, index) => {
-                                    return <UserChat key={chat._id} className="div" user={user} chat={chat}></UserChat>
+                                    let checkOnline = false;
+                                    if (chat && onlineUsers);
+                                    checkOnline = onlineUsers.some((v) => {
+                                        return v?.userId == chat?._id
+                                    });
+                                    if (checkOnline == true) {
+                                        console.log("Hurray!!")
+                                    }
+                                    return <UserChat key={chat._id} className="div" user={user} checkOnline={checkOnline} chat={chat}></UserChat>
 
                                 }
 

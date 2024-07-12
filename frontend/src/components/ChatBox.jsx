@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 import { useFetchRecipienUser } from "../hooks/useFetchRecipient";
@@ -12,9 +12,15 @@ const ChatBox = () => {
     console.log("Usr", user);
     console.log("current", currentChat)
     console.log("text", textMessage)
-    const { recipientUser } = useFetchRecipienUser(currentChat, user)
-    console.log("inside CChat box", recipientUser)
 
+    const { recipientUser } = useFetchRecipienUser(currentChat, user)
+
+
+    const scroll = useRef(null);
+    useEffect(() => {
+        console.log("Inside this scroll effect");
+        scroll.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    }, [messages])
     if (!recipientUser) {
         return <p className="text-xl font-bold text-center w-full">
             No conversation selected yet...
@@ -25,8 +31,8 @@ const ChatBox = () => {
             <div className="w-full text-center h-[10%] shadow flex justify-center items-center grow-0 ">
                 {recipientUser?.name}
             </div>
-            <div className="h-[80%] overflow-y-auto">
-                <div className="h-full ">
+            <div className="h-[80%] ">
+                <div ref={scroll} className="h-full overflow-y-auto ">
                     {messages && messages.map((message, index) => {
 
                         return (<div className={message?.senderId == user?.id ? "text-right mt-8 mr-8" : "text-left mt-8 ml-8"}>
@@ -34,7 +40,7 @@ const ChatBox = () => {
 
                                 <div className="">{message.text}</div>
 
-                                <div className="text-white text-xs text-right">{moment(message.createdAt).calendar()}</div>
+                                <div className="text-brown text-xs text-right">{moment(message.createdAt).calendar()}</div>
 
 
 

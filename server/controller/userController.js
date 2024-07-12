@@ -9,7 +9,7 @@ const createToken = (_id) => {
 }
 const registerUser = async (req, res) => {
     try {
-
+        console.log("Inside sign up");
         const { name, email, password } = req.body;
         let user = await userModel.findOne({ email: email });
         if (user) {
@@ -71,7 +71,8 @@ const findUser = async (req, res) => {
 }
 const getUsers = async (req, res) => {
     try {
-        const users = await userModel.find();
+        let x = userModel.find();
+        const users = await x;
         res.status(200).json(users);
     } catch (err) {
         res.status(500).json(err)
