@@ -1,7 +1,7 @@
 ;
 const { Server } = require("socket.io");
 
-const io = new Server({ cors: "https://goutham-chatapp.netlify.app/" });
+const io = new Server({ cors: "https://chat-app-delta-umber.vercel.app/" });
 ;
 let onlineUsers = []
 
