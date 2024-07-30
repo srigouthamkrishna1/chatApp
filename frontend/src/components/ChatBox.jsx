@@ -13,17 +13,19 @@ const ChatBox = () => {
     console.log("current", currentChat)
     console.log("text", textMessage)
 
+
     const { recipientUser } = useFetchRecipienUser(currentChat, user)
 
 
-    const scroll = useRef(null);
+    const scroll = useRef();
     useEffect(() => {
-        console.log("Inside this scroll effect");
-        scroll.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+        console.log("Inside this scroll effect", scroll.current);
+        scroll.current?.scrollTo(0, scroll.current.scrollHeight);
+
     }, [messages])
     if (!recipientUser) {
         return <p className="text-xl font-bold text-center w-full">
-            No conversation selected yet...
+            No conversation selec   ted yet...
         </p>
     }
     return (
@@ -35,7 +37,7 @@ const ChatBox = () => {
                 <div ref={scroll} className="h-full overflow-y-auto ">
                     {messages && messages.map((message, index) => {
 
-                        return (<div className={message?.senderId == user?.id ? "text-right mt-8 mr-8" : "text-left mt-8 ml-8"}>
+                        return (<div key={messages._id} className={message?.senderId == user?.id ? "text-right mt-8 mr-8 mb-8" : "text-left mt-8 ml-8 mb-8"}>
                             <div className="inline-block  p-3 rounded-lg shadow">
 
                                 <div className="">{message.text}</div>

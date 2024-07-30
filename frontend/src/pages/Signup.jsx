@@ -19,13 +19,13 @@ export const Signup = () => {
         <SubHeading label={"Enter your infromation to create an account"} />
         <InputBox onChange={e => {
           updateRegisterInfo({ ...registerInfo, name: e.target.value })
-        }} placeholder="Goutham" label={" Name"} />
+        }} placeholder="Goutham" label={" Name"} type={"name"} />
         <InputBox onChange={e => {
           updateRegisterInfo({ ...registerInfo, email: e.target.value })
-        }} placeholder="goutham@gmail.com" label={"Email"} />
+        }} placeholder="goutham@gmail.com" label={"Email"} type={"email"} />
         <InputBox onChange={(e) => {
           updateRegisterInfo({ ...registerInfo, password: e.target.value })
-        }} placeholder="123456" label={"Password"} />
+        }} placeholder="123456" label={"Password"} type={"password"} />
         <div className="pt-4">
           <Button onClick={async () => {
             const response = await axios.post("https://chatapp-t0rr.onrender.com/api/users/signup", registerInfo);

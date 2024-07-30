@@ -21,10 +21,10 @@ export const Signin = () => {
       <div className="rounded-lg bg-white w-80 text-center p-2 h-max px-4">
         <Heading label={"Sign in"} />
         <SubHeading label={"Enter your credentials to access your account"} />
-        <InputBox placeholder="harkirat@gmail.com" label={"Email"} onChange={(e) => {
+        <InputBox placeholder="goutham@gmail.com" label={"Email"} type={"email"} onChange={(e) => {
           updateLoginDetails({ ...loginDetails, email: e.target.value })
         }} />
-        <InputBox placeholder="123456" label={"Password"} onChange={(e) => {
+        <InputBox placeholder="123456" label={"Password"} type={"password"} onChange={(e) => {
           updateLoginDetails({ ...loginDetails, password: e.target.value })
         }} />
         <div className="pt-4">

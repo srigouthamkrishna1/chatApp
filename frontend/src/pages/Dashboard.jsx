@@ -16,12 +16,12 @@ export const Dashboard = () => {
         <PotentialChats></PotentialChats>
         <div className="h-[82%] w-full p-3 overflow-y-auto">
 
-            <div className="flex w-full h-full">
-                <div className="w-[50%]">
+            <div className="flex w-full h-full  ">
+                <div className="w-[50%]  overflow-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-500 scrollbar-thumb-rounded-md border-2 border-violet-200 border-rounded-md">
                     {userChats?.length < 1 ? null : (
                         <div className="flex h-full">
 
-                            <div className="w-full border-2 border-black">
+                            <div className="w-full ">
                                 {userChats?.map((chat, index) => {
                                     let checkOnline = false;
                                     if (chat && onlineUsers);
@@ -31,7 +31,7 @@ export const Dashboard = () => {
                                     if (checkOnline == true) {
                                         console.log("Hurray!!")
                                     }
-                                    return <UserChat key={chat._id} className="div" user={user} checkOnline={checkOnline} chat={chat}></UserChat>
+                                    return <UserChat key={chat._id} user={user} checkOnline={checkOnline} chat={chat}></UserChat>
 
                                 }
 
@@ -50,5 +50,5 @@ export const Dashboard = () => {
 
             </div>
         </div>
-    </div>
+    </div >
 }
