@@ -14,9 +14,11 @@ export const ChatContextProvider = ({ children, user }) => {
     const [newMessage, setNewMessage] = useState("");
     const [socket, setSocket] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([null]);
+    const [notifications, setNotifications] = useState();
     console.log("currentChat", currentChat)
     console.log("SetMessages", messages);
     console.log("onlineUsers", onlineUsers);
+    console.log("notifications", notifications);
 
 
     useEffect(() => {
@@ -50,13 +52,27 @@ export const ChatContextProvider = ({ children, user }) => {
         if (!socket) return
         socket.on("getMessage", (res) => {
             console.log("in this1")
-            if (currentChat._id !== res.chatId) {
+            if (currentChat?._id != res.chatId) {
+
                 return;
             }
             setMessages((prev) => [...prev, res]);
+
+        })
+        socket.on("getNotification", (res) => {
+
+            const isChatOpen = currentChat?.members.some(id => id === res.senderId);
+            console.log("inside notification");
+            if (isChatOpen) {
+                setNotifications((prev) => [{ ...res, isRead: true }, ...prev]);
+            }
+            else {
+                setNotifications((prev) => [res, ...prev]);
+            }
         })
         return () => {
             socket.off("getMessage")
+            socket.off("getNotification");
         }
     }, [currentChat, socket])
 
