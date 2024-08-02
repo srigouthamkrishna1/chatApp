@@ -7,8 +7,8 @@ const UserChat = ({ chat, user, checkOnline }) => {
     const { recipientUser } = useFetchRecipienUser(chat, user)
     const { updateCurrentChat } = useContext(ChatContext)
 
-    return (<div onClick={() => updateCurrentChat(chat)} className="shadow flex h-20 m-2 hover:bg-gray-200 relative border-b-2 border-black border-solid cursor-pointer">
-        <div className={` m-1  w-16 h-16 bg-blue-200 rounded-full flex justify-center align-items-center ${checkOnline ? "bg-green-200" : " "}`}>
+    return (<div onClick={() => updateCurrentChat(chat)} className="shadow flex h-20 m-2 bg-gray-200 hover:bg-gray-300 relative border-2 border-x-gray-500 rounded-md border-solid cursor-pointer">
+        <div className={` m-1  w-16 h-16 bg-slate-200 rounded-full flex justify-center align-items-center ${checkOnline ? "bg-green-200" : " "}`}>
             <img className="h-full w-[80%]" src={userIcon} />
 
         </div>

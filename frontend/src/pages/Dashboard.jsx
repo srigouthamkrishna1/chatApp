@@ -14,10 +14,10 @@ export const Dashboard = () => {
     return <div className="h-screen ">
         <Appbar />
         <PotentialChats></PotentialChats>
-        <div className="h-[82%] w-full p-3 overflow-y-auto">
+        <div className="h-[82%] w-full p-3 overflow-y-auto ">
 
             <div className="flex w-full h-full  ">
-                <div className="w-[50%]  overflow-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-500 scrollbar-thumb-rounded-md border-2 border-violet-200 border-rounded-md">
+                <div className="w-[50%]  overflow-auto scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-500 scrollbar-thumb-rounded-md border-2  rounded-md border-rounded-md">
                     {userChats?.length < 1 ? null : (
                         <div className="flex h-full">
 

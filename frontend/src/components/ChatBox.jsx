@@ -29,7 +29,7 @@ const ChatBox = () => {
         </p>
     }
     return (
-        <div className="flex flex-col  w-full h-full rounded-md bg-gray-100 ml-3 ">
+        <div className="flex flex-col  w-full h-full rounded-md bg-gray-200 ml-3 ">
             <div className="w-full text-center h-[10%] shadow flex justify-center items-center grow-0 ">
                 {recipientUser?.name}
             </div>

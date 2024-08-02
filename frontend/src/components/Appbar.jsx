@@ -1,6 +1,7 @@
 import { useContext } from "react"
 import { AuthContext } from "../context/AuthContext"
 import { useNavigate } from "react-router-dom";
+import Notification from "./Notification";
 
 export const Appbar = () => {
     const { user, logoutUser } = useContext(AuthContext);
@@ -15,15 +16,16 @@ export const Appbar = () => {
         <div className="font-bold text-xl">
             Logged in as {user?.name}
         </div>
-        <div className="flex h-full">
 
+        <div className="flex h-full justify-between items-center">
+            <Notification></Notification>
             <div className="rounded-full h-12 w-12 bg-slate-200 flex justify-center mt-1 mr-2 cursor-pointer" onClick={() => {
                 logoutUser();
                 navigate('/')
             }}>
 
                 <div className="flex flex-col justify-center h-full text-xl">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" height="30px" width="30px">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
                     </svg>
 

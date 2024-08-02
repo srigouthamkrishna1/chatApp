@@ -14,11 +14,12 @@ export const ChatContextProvider = ({ children, user }) => {
     const [newMessage, setNewMessage] = useState("");
     const [socket, setSocket] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([null]);
-    const [notifications, setNotifications] = useState();
+    const [notifications, setNotifications] = useState(null);
     console.log("currentChat", currentChat)
     console.log("SetMessages", messages);
     console.log("onlineUsers", onlineUsers);
     console.log("notifications", notifications);
+    const [allUsers, setAllUsers] = useState([]);
 
 
     useEffect(() => {
@@ -64,11 +65,24 @@ export const ChatContextProvider = ({ children, user }) => {
             const isChatOpen = currentChat?.members.some(id => id === res.senderId);
             console.log("inside notification");
             if (isChatOpen) {
-                setNotifications((prev) => [{ ...res, isRead: true }, ...prev]);
+                setNotifications((prev) => {
+                    if (prev == null) {
+                        return [{ ...res, isRead: true }];
+                    }
+                    else
+                        return [{ ...res, isRead: true }, ...prev]
+                })
             }
             else {
-                setNotifications((prev) => [res, ...prev]);
+                setNotifications((prev) => {
+                    if (prev == null) {
+                        return [res];
+                    }
+                    else
+                        return [res, ...prev]
+                });
             }
+
         })
         return () => {
             socket.off("getMessage")
@@ -94,7 +108,7 @@ export const ChatContextProvider = ({ children, user }) => {
                     return !isChatCreated;
                 });
                 setPotentialChats(pChats);
-
+                setAllUsers(response);
 
 
 
@@ -188,5 +202,5 @@ export const ChatContextProvider = ({ children, user }) => {
 
 
     }
-    return <ChatContext.Provider value={{ userChats, isUserChatsLoading, userChatsError, potentialChats, createChat, updateCurrentChat, messages, currentChat, sendTextMessage, onlineUsers }}>{children}</ChatContext.Provider>
+    return <ChatContext.Provider value={{ userChats, isUserChatsLoading, userChatsError, potentialChats, createChat, updateCurrentChat, messages, currentChat, sendTextMessage, onlineUsers, notifications, allUsers }}>{children}</ChatContext.Provider>
 }
