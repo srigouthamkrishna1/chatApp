@@ -21,7 +21,7 @@ export const ChatContextProvider = ({ children, user }) => {
     console.log("notifications", notifications);
     const [allUsers, setAllUsers] = useState([]);
 
-
+    console.log(".....", allUsers);
     useEffect(() => {
         const newSocket = io("https://chatapp-2-bsio.onrender.com");
 
@@ -108,7 +108,7 @@ export const ChatContextProvider = ({ children, user }) => {
                     return !isChatCreated;
                 });
                 setPotentialChats(pChats);
-                setAllUsers(response);
+                setAllUsers(response.data);
 
 
 
