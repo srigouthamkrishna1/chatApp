@@ -1,12 +1,13 @@
 import { useContext, useState } from "react";
 import { ChatContext } from "../context/ChatContext";
 import moment from "moment"
+import { AuthContext } from "../context/AuthContext";
 
 const Notification = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const { user } = useContext(ChatContext);
-    const { notifications, userChat, allUsers } = useContext(ChatContext);
-    console.log("(", allUsers)
+    const { user } = useContext(AuthContext);
+    const { notifications, userChats, allUsers ,markAllNotificationsAsRead,markNotificationsAsRead} = useContext(ChatContext);
+    console.log("notify", notifications)
     const unreadNotifications = notifications?.filter((u) => { return (u.isRead == false) })
     const modifiedNotifications = notifications?.map((u) => {
         const sender = allUsers?.find((user) => {
@@ -31,11 +32,11 @@ const Notification = () => {
             {isOpen ? <div className="absolute right-0  z-10 mt-2 w-80 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none " role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                 <div className="py-1 flex" role="none">
 
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0">Show notifications</a>
-                    <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-1">Mark as read</a>
+                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 font-bold underline" role="menuitem" tabindex="-1" id="menu-item-0">Show notifications</a>
+                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 underline  hover:font-bold" role="menuitem" tabindex="-1" id="menu-item-1" onClick={()=>{markAllNotificationsAsRead(notifications); }}>Mark as read</a>
                 </div>
                 {modifiedNotifications && modifiedNotifications.map((u, index) => {
-                    return (< div key={index} className="bg-gray-200   hover:bg-gray-300 shadow-sm h-25 rounded-md pb-4 pl-2 m-2 ">
+                    return (< div key={index} className="bg-gray-200   hover:bg-gray-300 shadow-sm h-25 rounded-md pb-4 pl-2 m-2 " onClick={()=>{markNotificationsAsRead(u,userChats ,user,notifications);setIsOpen(false)}}>
                         <div className="mt-3 mb-3 font-bold">{u.senderName} sent you a new message</div>
                         <div>{moment().calendar(u.date)}</div>
                     </div>)
